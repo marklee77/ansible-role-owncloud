@@ -1,7 +1,9 @@
 ---
-- command: /sbin/reboot
+- name: reboot
+  command: /sbin/reboot
 
-- sudo: False
+- name: wait for reboot to complete
+  sudo: False
   delegate_to: localhost
   wait_for: 
     host: "{{ ansible_ssh_host|default(inventory_host) }}" 

@@ -5,16 +5,6 @@
     cache_valid_time: 600
     upgrade: dist 
 
-- name: ensure required base packages are present
-  apt: 
-    pkg: "{{ item }}" 
-    state: latest 
-    update_cache: yes 
-    cache_valid_time: 600
-  with_items:
-    - dkms
-    - python-software-properties
-
 - name: autoremove unneeded packages
   command: apt-get -y autoremove
   register: autoremove_result
