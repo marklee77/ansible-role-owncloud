@@ -1,0 +1,20 @@
+---
+- name: ensure dependencies available through apt are installed
+  apt: 
+    pkg: "{{ item }}" 
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items:
+    - latexmk
+    - mongodb-server
+    - npm
+    - redis-server
+    - texlive
+
+- name: ensure that grunt is installed using npm
+  npm:
+    name: grunt-cli
+    state: latest
+    global: yes
+
