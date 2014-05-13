@@ -18,3 +18,10 @@
     name: grunt-cli
     state: latest
     global: yes
+
+- name: ensure that node links to nodejs
+  file:
+    path: /usr/local/bin/node
+    src: /usr/bin/nodejs
+    state: link
+

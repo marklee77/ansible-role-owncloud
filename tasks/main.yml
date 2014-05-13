@@ -1,3 +1,4 @@
 ---
 - include: upgrade.yml
 - include: dependencies.yml
+- include: sharelatex.yml
