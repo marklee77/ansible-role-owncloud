@@ -1,0 +1,15 @@
+---
+- name: check sharelatex out of git repository
+  git:
+    repo: https://github.com/sharelatex/sharelatex.git
+    dest: /srv/sharelatex
+    update: yes
+
+- name: install npm packages
+  npm:
+    path: /srv/sharelatex
+    state: latest
+    global: yes
+
+- name: run grunt install
+  command: grunt install chdir=/srv/sharelatex
