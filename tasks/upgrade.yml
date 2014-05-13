@@ -12,6 +12,7 @@
     update_cache: yes 
     cache_valid_time: 600
   with_items:
+    - dkms
     - python-software-properties
 
 - name: autoremove unneeded packages

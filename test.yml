@@ -1,3 +1,4 @@
 - hosts: default
+  sudo: True
   roles:
     - sharelatex
