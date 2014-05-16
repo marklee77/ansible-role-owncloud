@@ -1,0 +1,27 @@
+---
+- name: ensure required nginx packages are installed
+  apt: 
+    pkg: "{{ item }}"
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items:
+    - nginx
+
+- name: update sharelatex site from template
+  template:
+    src: etc/nginx/sites-available/sharelatex
+    dest: /etc/nginx/sites-available/sharelatex
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx
+
+- name: enable sharelatex nginx configuration
+  file:
+    src: ../sites-available/sharelatex
+    path: /etc/nginx/sites-enabled/sharelatex
+    state: link
+  notify:
+    - restart nginx
