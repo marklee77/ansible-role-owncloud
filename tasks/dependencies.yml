@@ -10,14 +10,9 @@
     - mongodb-server
     - mongodb-dev
     - redis-server
+    - texlive
     - nodejs
     - npm
-
-- name: ensure that grunt is installed using npm
-  npm:
-    name: grunt-cli
-    state: latest
-    global: yes
 
 - name: ensure that node links to nodejs
   file:
@@ -25,3 +20,22 @@
     src: /usr/bin/nodejs
     state: link
 
+- name: ensure that grunt is installed using npm
+  npm:
+    name: grunt-cli
+    state: latest
+    global: yes
+
+- name: get latexmk from source
+  get_url:
+    url: http://mirrors.ctan.org/support/latexmk/latexmk.pl
+    dest: /usr/local/bin/latexmk
+    force: yes
+
+- name: ensure latexmk has proper permissions
+  file:
+    path: /usr/local/bin/latexmk
+    owner: root
+    group: root
+    mode: 0755
+    state: file
