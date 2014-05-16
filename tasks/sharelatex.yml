@@ -6,10 +6,10 @@
     update: yes
 
 - name: install npm packages
-  npm:
-    path: /srv/sharelatex
-    state: latest
-    global: yes
+  shell: npm install && touch .npm_install
+         executable=/bin/bash
+         chdir=/srv/sharelatex
+         creates=/srv/sharelatex/.npm_install
 
 - name: run grunt install
   shell: grunt install && touch .grunt_install
