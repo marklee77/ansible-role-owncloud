@@ -1,0 +1,54 @@
+# sharelatex
+
+upstream sharelatex {
+  server localhost:3000;
+}
+
+server {
+  listen *:{{ sharelatex_port }};         # e.g., listen 192.168.1.1:80; In most cases *:80 is a good idea
+  server_name {{ sharelatex_hostname }};     # e.g., server_name source.example.com;
+  server_tokens off;     # don't show the version number, a security best practice
+  root /srv/sharelatex/public;
+  
+  # individual nginx logs for this sharelatex vhost
+  access_log  /var/log/nginx/sharelatex_access.log;
+  error_log   /var/log/nginx/sharelatex_error.log;
+
+  location / {
+    # serve static files from defined root folder;.
+    # @sharelatex is a named location for the upstream fallback, see below
+    try_files $uri $uri/index.html $uri.html @sharelatex;
+  }
+
+  # if a file, which is not found in the root folder is requested,
+  # then the proxy pass the request to the upsteam (sharelatex unicorn)
+  location @sharelatex {
+    # If you use https make sure you disable gzip compression 
+    # to be safe against BREACH attack
+    # gzip off;
+
+    proxy_read_timeout 300; # Some requests take more than 30 seconds.
+    proxy_connect_timeout 300; # Some requests take more than 30 seconds.
+    proxy_redirect     off;
+
+    proxy_set_header   X-Forwarded-Proto $scheme;
+    proxy_set_header   Host              $http_host;
+    proxy_set_header   X-Real-IP         $remote_addr;
+    proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+
+    proxy_pass http://sharelatex;
+  }
+
+  # Enable gzip compression as per rails guide: http://guides.rubyonrails.org/asset_pipeline.html#gzip-compression
+  # WARNING: If you are using relative urls do remove the block below
+  # See config/application.rb under "Relative url support" for the list of
+  # other files that need to be changed for relative url support
+  location ~ ^/(assets)/  {
+    root /srv/sharelatex/public;
+    gzip_static on; # to serve pre-gzipped version
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  error_page 502 /502.html;
+}
