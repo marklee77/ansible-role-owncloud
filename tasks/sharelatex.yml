@@ -19,6 +19,8 @@
     repo: https://github.com/sharelatex/sharelatex.git
     dest: /srv/sharelatex
     update: yes
+  notify:
+    - restart sharelatex
 
 - name: ensure /srv/sharelatex ownership is correct
   file:
@@ -33,6 +35,8 @@
          executable=/bin/bash
          chdir=/srv/sharelatex
          creates=/srv/sharelatex/.npm_install
+  notify:
+    - restart sharelatex
 
 - name: run grunt install
   sudo_user: sharelatex
@@ -40,3 +44,20 @@
          executable=/bin/bash
          chdir=/srv/sharelatex
          creates=/srv/sharelatex/.grunt_install
+  notify:
+    - restart sharelatex
+
+- name: ensure sharelatex init script is installed and up to date
+  template:
+    src: etc/init/sharelatex.conf
+    dest: /etc/init/sharelatex.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: ensure sharelatex service is started and enabled
+  service:
+    name: sharelatex
+    state: started
+    enabled: yes
+
