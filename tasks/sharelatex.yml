@@ -1,17 +1,41 @@
 ---
+- name: ensure that sharelatex group exists
+  group:
+    name: sharelatex
+    state: present
+
+- name: ensure that sharelatex user exits
+  user:
+    name: sharelatex
+    group: sharelatex
+    home: /srv/sharelatex
+    createhome: no
+    shell: /bin/bash
+    comment: sharelatexLab User
+    state: present
+
 - name: check sharelatex out of git repository
   git:
     repo: https://github.com/sharelatex/sharelatex.git
     dest: /srv/sharelatex
     update: yes
 
+- name: ensure /srv/sharelatex ownership is correct
+  file:
+    path: /srv/sharelatex
+    owner: sharelatex
+    group: sharelatex
+    recurse: yes
+
 - name: install npm packages
+  sudo_user: sharelatex
   shell: npm install && touch .npm_install
          executable=/bin/bash
          chdir=/srv/sharelatex
          creates=/srv/sharelatex/.npm_install
 
 - name: run grunt install
+  sudo_user: sharelatex
   shell: grunt install && touch .grunt_install
          executable=/bin/bash
          chdir=/srv/sharelatex
