@@ -5,11 +5,11 @@
     dest: /srv/sharelatex
     update: yes
 
-- name: install npm packages
-  npm:
-    path: /srv/sharelatex
-    state: latest
-    global: yes
+#- name: install npm packages
+#  npm:
+#    path: /srv/sharelatex
+#    state: latest
+#    global: yes
 
-- name: run grunt install
-  command: grunt install chdir=/srv/sharelatex
+#- name: run grunt install
+#  command: grunt install chdir=/srv/sharelatex

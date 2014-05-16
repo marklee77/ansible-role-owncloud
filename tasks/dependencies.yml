@@ -9,9 +9,12 @@
     - git
     - latexmk
     - mongodb-server
-    - npm
+    - mongodb-dev
     - redis-server
     - texlive
+    - nodejs
+    - node-gyp
+    - npm
 
 - name: ensure that grunt is installed using npm
   npm:
