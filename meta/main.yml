@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Mark Stillwell
-  description: ShareLaTeX web service
+  description: OwnCloud web service
   company: Cranfield University
   license: Affero GPL
   min_ansible_version: 1.5
