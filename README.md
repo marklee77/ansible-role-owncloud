@@ -37,6 +37,10 @@ Try it Out
 Check out the github repository, vagrant up, and load http://localhost:8888 in
 your web browser.
 
+NOTE: the first time you may see an error about webdav not being setup
+correctly. This actually has to do with SSL not being setup by default. I'm
+working on it. Clear the browser location bar and then try again.
+
 License
 -------
 
