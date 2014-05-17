@@ -1,9 +1,4 @@
 ---
-- name: restart sharelatex
-  service:
-    name: sharelatex
-    state: restarted
- 
 - name: restart nginx
   service:
     name: nginx

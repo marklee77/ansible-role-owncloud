@@ -1,4 +1,18 @@
 ---
+- name: ensure dependencies available through apt are installed
+  apt: 
+    pkg: "{{ item }}" 
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items:
+    - php5-curl
+    - php5-gd
+    - php5-imagick
+    - php5-intl
+    - php5-json
+    - php5-mcrypt
+    - php5-mysql
 - name: ensure that owncloud group exists
   group:
     name: owncloud
@@ -39,3 +53,4 @@
     owner: owncloud
     group: owncloud
     recurse: yes
+
