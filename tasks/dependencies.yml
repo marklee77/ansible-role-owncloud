@@ -6,14 +6,10 @@
     update_cache: yes 
     cache_valid_time: 600
   with_items:
-    - python-software-properties
-
-- name: ensure owncloud repository key is present
-  apt_key:
-    url: http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.04/Release.key
-
-- name: ensure owncloud package repository is present
-  apt_repository:
-    repo: deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04/ /
-    update_cache: yes
-    state: present
+    - php5-curl
+    - php5-gd
+    - php5-imagick
+    - php5-intl
+    - php5-json
+    - php5-mcrypt
+    - php5-mysql

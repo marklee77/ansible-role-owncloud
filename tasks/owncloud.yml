@@ -1,9 +1,35 @@
 ---
-- name: ensure owncloud packages are installed
-  apt:
-    pkg: "{{ item }}"
-    state: latest
-    update_cache: yes
-    cache_valid_time: 600
-  with_items:
-    - owncloud 
+- name: ensure that owncloud group exists
+  group:
+    name: owncloud
+    state: present
+
+- name: ensure that owncloud user exits
+  user:
+    name: owncloud
+    group: owncloud
+    home: /srv/owncloud
+    createhome: yes
+    shell: /bin/bash
+    comment: owncloudLab User
+    state: present
+
+- name: ensure /var/cache/ansible directory exists
+  file:
+    path: /var/cache/ansible
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: download the owncloud install package
+  get_url:
+    url: http://download.owncloud.org/community/owncloud-6.0.3.tar.bz2
+    dest: /var/cache/ansible/owncloud.tar.bz2
+
+- name: unarchive owncloud to /srv/owncloud
+  sudo_user: owncloud
+  shell: tar xvjf /var/cache/ansible/owncloud.tar.bz2 && touch .untar
+         executable=/bin/bash
+         chdir=/srv/owncloud
+         creates=/srv/owncloud/.untar

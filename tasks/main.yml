@@ -1,4 +1,6 @@
 ---
 - include: upgrade.yml
 - include: dependencies.yml
+- include: mysql.yml
+#- include: nginx.yml
 - include: owncloud.yml
