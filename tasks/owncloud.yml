@@ -9,7 +9,7 @@
     name: owncloud
     group: owncloud
     home: /srv/owncloud
-    createhome: yes
+    createhome: no
     shell: /bin/bash
     comment: owncloudLab User
     state: present
@@ -24,12 +24,18 @@
 
 - name: download the owncloud install package
   get_url:
-    url: http://download.owncloud.org/community/owncloud-6.0.3.tar.bz2
+    url: https://download.owncloud.org/community/owncloud-6.0.3.tar.bz2
     dest: /var/cache/ansible/owncloud.tar.bz2
 
 - name: unarchive owncloud to /srv/owncloud
   sudo_user: owncloud
-  shell: tar xvjf /var/cache/ansible/owncloud.tar.bz2 && touch .untar
-         executable=/bin/bash
-         chdir=/srv/owncloud
-         creates=/srv/owncloud/.untar
+  command: tar xvjf /var/cache/ansible/owncloud.tar.bz2
+           chdir=/srv
+           creates=/srv/owncloud
+
+- name: ensure /srv/owncloud is owned by owncloud user
+  file:
+    path: /srv/owncloud
+    owner: owncloud
+    group: owncloud
+    recurse: yes
