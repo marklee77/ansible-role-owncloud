@@ -6,7 +6,7 @@ $AUTOCONFIG = array(
   "dbpass"        => "{{ owncloud_owncloud_mysql_password }}",
   "dbhost"        => "localhost",
   "dbtableprefix" => "",
-  "adminlogin"    => "root",
-  "adminpass"     => "root-password",
+  "adminlogin"    => "{{ owncloud_admin_login }}",
+  "adminpass"     => "{{ owncloud_admin_password }}",
   "directory"     => "/srv/owncloud/data",
 )

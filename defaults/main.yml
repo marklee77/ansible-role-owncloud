@@ -3,3 +3,5 @@ owncloud_root_mysql_password: "{{ lookup('password', inventory_dir + '/credentia
 owncloud_owncloud_mysql_password: "{{ lookup('password', inventory_dir + '/credentials/owncloud-mysql-password') }}"
 owncloud_hostname: owncloud
 owncloud_port: 8888
+owncloud_admin_login: root
+owncloud_admin_password: password

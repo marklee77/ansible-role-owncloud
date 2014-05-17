@@ -13,8 +13,12 @@ Role Variables
                        "owncloud" by default
 - owncloud_port: hostname that owncloud will service, will be set to 8888 by 
                default.
-- gitlab_root_mysql_password: root mysql password, will be set to a random value
-                              by default.
+- owncloud_root_mysql_password: root mysql password, will be set to a random 
+                                value by default.
+- owncloud_owncloud_mysql_password: owncloud mysql password, will be set to a 
+                                    random value by default.
+* owncloud_admin_login: owncloud admin login name, 'root' by default.
+- owncloud_admin_password: owncloud admin password, 'password' by default.
 
 Example Playbook
 -------------------------
