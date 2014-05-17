@@ -1,4 +1,5 @@
 ---
 owncloud_root_mysql_password: "{{ lookup('password', inventory_dir + '/credentials/root-mysql-password') }}"
+owncloud_owncloud_mysql_password: "{{ lookup('password', inventory_dir + '/credentials/owncloud-mysql-password') }}"
 owncloud_hostname: owncloud
 owncloud_port: 8888

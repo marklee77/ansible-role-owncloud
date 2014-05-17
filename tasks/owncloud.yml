@@ -55,6 +55,35 @@
     group: owncloud
     recurse: yes
 
+- name: ensure owncloud database is present
+  mysql_db:
+    name: owncloud
+
+- name: ensure owncloud database user is present
+  mysql_user:
+    name: owncloud
+    host: "{{ item }}"
+    password: "{{ gitlab_git_mysql_password }}"
+    priv: gitlabhq_production.*:ALL
+  with_items:
+    - "%"
+    - localhost
+
+- name: copy .my.cnf file with owncloud password credentials
+  template:
+    src: srv/owncloud/.my.cnf
+    dest: /srv/owncloud/.my.cnf
+    owner: owncloud
+    group: owncloud
+    mode: 0600
+
+- name: update owncloud autoconfiguration from template
+  template:
+    src: srv/owncloud/config/autoconfig.php
+    dest: /srv/owncloud/config/autoconfig.php
+    owner: owncloud
+    group: owncloud
+    mode: 0600
 
 - name: update fpm owncloud configuration from template
   template:
