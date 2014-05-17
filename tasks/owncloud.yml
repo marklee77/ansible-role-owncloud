@@ -13,6 +13,7 @@
     - php5-json
     - php5-mcrypt
     - php5-mysql
+
 - name: ensure that owncloud group exists
   group:
     name: owncloud
@@ -38,11 +39,10 @@
 
 - name: download the owncloud install package
   get_url:
-    url: https://download.owncloud.org/community/owncloud-6.0.3.tar.bz2
+    url: http://download.owncloud.org/community/owncloud-6.0.3.tar.bz2
     dest: /var/cache/ansible/owncloud.tar.bz2
 
 - name: unarchive owncloud to /srv/owncloud
-  sudo_user: owncloud
   command: tar xvjf /var/cache/ansible/owncloud.tar.bz2
            chdir=/srv
            creates=/srv/owncloud
@@ -54,3 +54,31 @@
     group: owncloud
     recurse: yes
 
+
+- name: update fpm owncloud configuration from template
+  template:
+    src: etc/php5/fpm/pool.d/owncloud.conf
+    dest: /etc/php5/fpm/pool.d/owncloud.conf 
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart php5-fpm
+
+- name: update nginx owncloud configuration from template
+  template:
+    src: etc/nginx/sites-available/owncloud
+    dest: /etc/nginx/sites-available/owncloud
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx
+
+- name: enable owncloud nginx configuration
+  file:
+    src: ../sites-available/owncloud
+    path: /etc/nginx/sites-enabled/owncloud
+    state: link
+  notify:
+    - restart nginx
