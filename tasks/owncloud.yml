@@ -63,8 +63,8 @@
   mysql_user:
     name: owncloud
     host: "{{ item }}"
-    password: "{{ gitlab_git_mysql_password }}"
-    priv: gitlabhq_production.*:ALL
+    password: "{{ owncloud_owncloud_mysql_password }}"
+    priv: owncloud.*:ALL
   with_items:
     - "%"
     - localhost
