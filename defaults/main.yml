@@ -1,7 +1,17 @@
 ---
 owncloud_root_mysql_password: "{{ lookup('password', inventory_dir + '/credentials/root-mysql-password') }}"
 owncloud_owncloud_mysql_password: "{{ lookup('password', inventory_dir + '/credentials/owncloud-mysql-password') }}"
-owncloud_hostname: owncloud
-owncloud_port: 8888
-owncloud_admin_login: root
+
+owncloud_download_url: http://download.owncloud.org/community/owncloud-6.0.3.tar.bz2
+owncloud_hostname: localhost
+owncloud_http_port: 80
+owncloud_https_port: 443
+owncloud_https_enable: true
+owncloud_https_force: true
+
+ownlcloud_ssl_cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+ownlcloud_ssl_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+
+owncloud_admin_username: root
 owncloud_admin_password: password
+

@@ -1,62 +1,81 @@
+
 upstream php-handler {
-        server unix:/var/run/php5-fpm-owncloud.sock;
+  server unix:/var/run/php5-fpm-owncloud.sock;
 }
 
 server {
-        listen {{ owncloud_port }};
-        server_name {{ owncloud_hostname }};
 
-        root /srv/owncloud/;
+  listen {{ owncloud_http_port }};
+  server_name {{ owncloud_hostname }};
 
-        client_max_body_size 10G; # set max upload size
-        fastcgi_buffers 64 4K;
+  {% if owncloud_https_enable -%}
+  listen {{ owncloud_https_port }} ssl;
+  ssl_certificate {{ owncloud_ssl_cert_file }};
+  ssl_certificate_key {{ owncloud_ssl_key_file }};
+  ssl_session_timeout 30m;
+  ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers         HIGH:!aNULL:!MD5;
 
-        rewrite ^/caldav(.*)$ /remote.php/caldav$1 redirect;
-        rewrite ^/carddav(.*)$ /remote.php/carddav$1 redirect;
-        rewrite ^/webdav(.*)$ /remote.php/webdav$1 redirect;
+  {% if owncloud_https_force -%}
+  if ($scheme = http) {
+    return 301 https://$server_name
+    {%- if owncloud_https_port != 443 %}:{{ owncloud_https_port }}{% endif -%}
+        $request_uri;
+  }
+  {%- endif %}
+  {%- endif %}
 
-        index index.php;
-        error_page 403 /core/templates/403.php;
-        error_page 404 /core/templates/404.php;
+  root /srv/owncloud/;
 
-        location = /robots.txt {
-            allow all;
-            log_not_found off;
-            access_log off;
-        }
+  client_max_body_size 10G; # set max upload size
+  fastcgi_buffers 64 4K;
 
-        location ~ ^/(data|config|\.ht|db_structure\.xml|README) {
-                deny all;
-        }
+  rewrite ^/caldav(.*)$ /remote.php/caldav$1 redirect;
+  rewrite ^/carddav(.*)$ /remote.php/carddav$1 redirect;
+  rewrite ^/webdav(.*)$ /remote.php/webdav$1 redirect;
 
-        location / {
-                # The following 2 rules are only needed with webfinger
-                rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
-                rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
+  index index.php;
+  error_page 403 /core/templates/403.php;
+  error_page 404 /core/templates/404.php;
 
-                rewrite ^/.well-known/carddav /remote.php/carddav/ redirect;
-                rewrite ^/.well-known/caldav /remote.php/caldav/ redirect;
+  location = /robots.txt {
+    allow all;
+    log_not_found off;
+    access_log off;
+  }
 
-                rewrite ^(/core/doc/[^\/]+/)$ $1/index.html;
+  location ~ ^/(data|config|\.ht|db_structure\.xml|README) {
+    deny all;
+  }
 
-                try_files $uri $uri/ index.php;
-        }
+  location / {
+    # The following 2 rules are only needed with webfinger
+    rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+    rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
 
-        location ~ ^(.+?\.php)(/.*)?$ {
-                try_files $1 = 404;
+    rewrite ^/.well-known/carddav /remote.php/carddav/ redirect;
+    rewrite ^/.well-known/caldav /remote.php/caldav/ redirect;
 
-                include fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $document_root$1;
-                fastcgi_param PATH_INFO $2;
-                fastcgi_param HTTPS on;
-                fastcgi_pass php-handler;
-        }
+    rewrite ^(/core/doc/[^\/]+/)$ $1/index.html;
 
-        # Optional: set long EXPIRES header on static assets
-        location ~* ^.+\.(jpg|jpeg|gif|bmp|ico|png|css|js|swf)$ {
-                expires 30d;
-                # Optional: Don't log access to assets
-                access_log off;
-        }
+    try_files $uri $uri/ index.php;
+  }
+
+  location ~ ^(.+?\.php)(/.*)?$ {
+    try_files $1 = 404;
+
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$1;
+    fastcgi_param PATH_INFO $2;
+    fastcgi_param HTTPS on;
+    fastcgi_pass php-handler;
+  }
+
+  # Optional: set long EXPIRES header on static assets
+  location ~* ^.+\.(jpg|jpeg|gif|bmp|ico|png|css|js|swf)$ {
+    expires 30d;
+    # Optional: Don't log access to assets
+    access_log off;
+  }
 
 }
