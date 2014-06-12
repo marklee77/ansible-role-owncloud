@@ -15,6 +15,7 @@
     - php5-json
     - php5-mcrypt
     - php5-mysql
+    - ssl-cert
 
 - name: ensure that owncloud group exists
   group:
