@@ -44,7 +44,7 @@ working on it. Clear the browser location bar and then try again.
 License
 -------
 
-Affero GPL
+GPLv2
 
 Author Information
 ------------------
