@@ -6,11 +6,10 @@ owncloud_download_url: http://download.owncloud.org/community/owncloud-6.0.3.tar
 owncloud_hostname: localhost
 owncloud_http_port: 80
 owncloud_https_port: 443
-owncloud_https_enable: true
 owncloud_https_force: true
 
-owncloud_ssl_cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
-owncloud_ssl_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+owncloud_ssl_cert_file: /etc/ssl/private/owncloud.pem
+owncloud_ssl_key_file: /etc/ssl/private/owncloud.pem
 
 owncloud_admin_username: root
 owncloud_admin_password: password

@@ -8,7 +8,5 @@ $AUTOCONFIG = array(
   "dbtableprefix" => "oc_",
   "adminlogin"    => "{{ owncloud_admin_username }}",
   "adminpass"     => "{{ owncloud_admin_password }}",
-  "directory"     => "/srv/owncloud/data",
-  "overwritehost" => "{{ owncloud_hostname }}:{{ owncloud_http_port }}",
-  "overwriteprotocol" => "http"
+  "directory"     => "/srv/owncloud/data"
 );

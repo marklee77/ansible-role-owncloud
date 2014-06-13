@@ -8,7 +8,6 @@ server {
   listen {{ owncloud_http_port }};
   server_name {{ owncloud_hostname }};
 
-  {% if owncloud_https_enable -%}
   listen {{ owncloud_https_port }} ssl;
   ssl_certificate {{ owncloud_ssl_cert_file }};
   ssl_certificate_key {{ owncloud_ssl_key_file }};
@@ -22,7 +21,6 @@ server {
     {%- if owncloud_https_port != 443 %}:{{ owncloud_https_port }}{% endif -%}
         $request_uri;
   }
-  {%- endif %}
   {%- endif %}
 
   root /srv/owncloud/;

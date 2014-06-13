@@ -17,6 +17,19 @@
     - php5-mysql
     - ssl-cert
 
+# FIXME: if ssl-cert turns out problematic this can probably be done in a
+# self-contained shell script...
+- name: ensure that ssl-cert is configured properly to generate self-signed certificate if required
+  debconf:
+    name: ssl-cert
+    question: make-ssl-cert/hostname 
+    vtype: string
+    value: "{{ owncloud_hostname }}"
+
+- name: create self-signed key/certificate pair if required
+  shell: DEBIAN_FRONTEND=noninteractive make-ssl-cert /usr/share/ssl-cert/ssleay.cnf {{ owncloud_ssl_cert_file }}
+         creates={{ owncloud_ssl_cert_file }}
+
 - name: ensure that owncloud group exists
   group:
     name: owncloud
@@ -82,6 +95,14 @@
   template:
     src: srv/owncloud/config/autoconfig.php
     dest: /srv/owncloud/config/autoconfig.php
+    owner: owncloud
+    group: owncloud
+    mode: 0600
+
+- name: update /srv/owncloud/config/config.php from template
+  template:
+    src: srv/owncloud/config/config.php
+    dest: /srv/owncloud/config/config.php
     owner: owncloud
     group: owncloud
     mode: 0600
