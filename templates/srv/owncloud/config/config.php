@@ -1,4 +1,4 @@
 <?php
 $CONFIG = array (
-  'overwritehost' => '{{ owncloud_hostname }}'
+  'forcessl' => {{ owncloud_https_force }}
 );

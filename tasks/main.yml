@@ -75,6 +75,10 @@
   command: tar xvjf /var/cache/ansible/owncloud.tar.bz2
            chdir=/srv
            creates=/srv/owncloud
+  notify:
+    - update /srv/owncloud/config/autoconfig.php from template
+    - update /srv/owncloud/config/config.php from template
+    - initialize database
 
 - name: ensure /srv/owncloud is owned by owncloud user
   file:
@@ -87,22 +91,6 @@
   template:
     src: srv/owncloud/.my.cnf
     dest: /srv/owncloud/.my.cnf
-    owner: owncloud
-    group: owncloud
-    mode: 0600
-
-- name: update /srv/owncloud/config/autoconfig.php from template
-  template:
-    src: srv/owncloud/config/autoconfig.php
-    dest: /srv/owncloud/config/autoconfig.php
-    owner: owncloud
-    group: owncloud
-    mode: 0600
-
-- name: update /srv/owncloud/config/config.php from template
-  template:
-    src: srv/owncloud/config/config.php
-    dest: /srv/owncloud/config/config.php
     owner: owncloud
     group: owncloud
     mode: 0600

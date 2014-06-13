@@ -8,3 +8,22 @@
   service:
     name: nginx
     state: restarted
+
+- name: update /srv/owncloud/config/autoconfig.php from template
+  template:
+    src: srv/owncloud/config/autoconfig.php
+    dest: /srv/owncloud/config/autoconfig.php
+    owner: owncloud
+    group: owncloud
+    mode: 0600
+
+- name: update /srv/owncloud/config/config.php from template
+  template:
+    src: srv/owncloud/config/config.php
+    dest: /srv/owncloud/config/config.php
+    owner: owncloud
+    group: owncloud
+    mode: 0600
+
+- name: initialize database
+  command: curl --insecure https://{{ owncloud_hostname }}:{{ owncloud_https_port }}
