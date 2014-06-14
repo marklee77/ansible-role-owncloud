@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "site.yml"
     ansible.extra_vars = {
       owncloud_http_port: 8080,
-      owncloud_https_force: false,
+      owncloud_require_ssl: false,
     }
   end
 

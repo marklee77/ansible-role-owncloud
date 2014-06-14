@@ -1,4 +1,4 @@
 <?php
 $CONFIG = array (
-  'forcessl' => {{ owncloud_https_force }}
+  'forcessl' => {{ owncloud_require_ssl }}
 );
