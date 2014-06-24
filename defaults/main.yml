@@ -9,8 +9,8 @@ owncloud_http_port: 80
 owncloud_https_port: 443
 owncloud_require_ssl: true
 
-owncloud_ssl_cert_file: /etc/ssl/private/owncloud.pem
-owncloud_ssl_key_file: /etc/ssl/private/owncloud.pem
+owncloud_ssl_cert_file: /etc/ssl/certs/{{ owncloud_hostname|replace(".", "_") }}.crt
+owncloud_ssl_key_file: /etc/ssl/private/{{ owncloud_hostname|replace(".", "_") }}.key
 
 owncloud_admin_username: root
 owncloud_admin_password: password

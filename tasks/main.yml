@@ -7,6 +7,7 @@
     cache_valid_time: 600
   with_items:
     - nginx
+    - openssl
     - php5-curl
     - php5-fpm
     - php5-gd
@@ -15,20 +16,14 @@
     - php5-json
     - php5-mcrypt
     - php5-mysql
-    - ssl-cert
-
-# FIXME: if ssl-cert turns out problematic this can probably be done in a
-# self-contained shell script...
-- name: ensure that ssl-cert is configured properly to generate self-signed certificate if required
-  debconf:
-    name: ssl-cert
-    question: make-ssl-cert/hostname 
-    vtype: string
-    value: "{{ owncloud_hostname }}"
 
 - name: create self-signed key/certificate pair if required
-  shell: DEBIAN_FRONTEND=noninteractive make-ssl-cert /usr/share/ssl-cert/ssleay.cnf {{ owncloud_ssl_cert_file }}
-         creates={{ owncloud_ssl_cert_file }}
+  command: >
+            openssl req -newkey rsa:2048 -x509 -days 365 -nodes 
+            -subj /CN={{ owncloud_hostname }} 
+            -out {{ owncloud_ssl_cert_file }} 
+            -keyout {{ owncloud_ssl_key_file }}
+            creates={{ owncloud_ssl_cert_file }}
 
 - name: ensure that owncloud group exists
   group:
