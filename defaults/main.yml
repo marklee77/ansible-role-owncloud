@@ -1,7 +1,7 @@
 ---
 owncloud_run_dir: "{{ lookup('env', 'PWD') }}"
-owncloud_root_mysql_password: "{{ lookup('password', owncloud_run_dir + '/credentials/root-mysql-password') }}"
-owncloud_owncloud_mysql_password: "{{ lookup('password', owncloud_run_dir + '/credentials/owncloud-mysql-password') }}"
+owncloud_root_mysql_password: "{{ lookup('password', owncloud_run_dir + '/private/credentials/root-mysql-password') }}"
+owncloud_owncloud_mysql_password: "{{ lookup('password', owncloud_run_dir + '/private/credentials/owncloud-mysql-password') }}"
 
 owncloud_download_url: http://download.owncloud.org/community/owncloud-6.0.3.tar.bz2
 owncloud_hostname: localhost
