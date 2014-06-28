@@ -1,5 +1,5 @@
-Role Name
-========
+marklee77.owncloud
+==================
 
 The purpose of this role is to install owncloud to a web server and enable
 access with nginx. This install uses the MySQL backend. The owncloud server name
@@ -21,7 +21,7 @@ Role Variables
 - owncloud_admin_password: owncloud admin password, 'password' by default.
 
 Example Playbook
--------------------------
+----------------
 
 Including an example of how to use your role (for instance, with variables 
 passed in as parameters) is always nice for users too:
@@ -32,7 +32,7 @@ passed in as parameters) is always nice for users too:
         - owncloud
 
 Try it Out
----------------------------
+----------
 
 Check out the github repository, vagrant up, and load http://localhost:8888 in
 your web browser.
@@ -49,5 +49,5 @@ GPLv2
 Author Information
 ------------------
 
-http://marklee77.github.io
+http://stillwell.me
 

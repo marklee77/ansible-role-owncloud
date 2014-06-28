@@ -18,12 +18,13 @@
     - php5-mysql
 
 - name: create self-signed key/certificate pair if required
-  command: >
-            openssl req -newkey rsa:2048 -x509 -days 365 -nodes 
-            -subj /CN={{ owncloud_hostname }} 
-            -out {{ owncloud_ssl_cert_file }} 
-            -keyout {{ owncloud_ssl_key_file }}
-            creates={{ owncloud_ssl_cert_file }}
+  shell: >
+          openssl req -newkey rsa:2048 -x509 -nodes
+          -days 365 -subj "/CN={{ owncloud_hostname }}"
+          -out {{ owncloud_ssl_cert_file }}
+          -keyout {{ owncloud_ssl_key_file }} &&
+          update-ca-certificates
+          creates={{ owncloud_ssl_cert_file }}
 
 - name: ensure that owncloud group exists
   group:

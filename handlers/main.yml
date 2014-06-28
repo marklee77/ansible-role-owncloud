@@ -26,4 +26,4 @@
     mode: 0600
 
 - name: initialize database
-  command: curl --insecure https://{{ owncloud_hostname }}:{{ owncloud_https_port }}
+  command: curl https://{{ owncloud_hostname }}:{{ owncloud_https_port }}
