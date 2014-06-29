@@ -1,5 +1,5 @@
 
-upstream php-handler {
+upstream php-handler-owncloud {
   server unix:/var/run/php5-fpm-owncloud.sock;
 }
 
@@ -65,7 +65,7 @@ server {
     include fastcgi_params;
     fastcgi_param SCRIPT_FILENAME $document_root$1;
     fastcgi_param PATH_INFO $2;
-    fastcgi_pass php-handler;
+    fastcgi_pass php-handler-owncloud;
     {% if owncloud_require_ssl -%}
     fastcgi_param HTTPS on;
     {%- endif %}
