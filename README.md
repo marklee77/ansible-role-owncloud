@@ -11,7 +11,7 @@ Role Variables
 
 - owncloud_hostname: hostname that owncloud will service, will be set to 
                        "owncloud" by default
-- owncloud_port: hostname that owncloud will service, will be set to 8888 by 
+- owncloud_port: hostname that owncloud will service, will be set to 8080 by 
                default.
 - owncloud_root_mysql_password: root mysql password, will be set to a random 
                                 value by default.
@@ -34,7 +34,7 @@ passed in as parameters) is always nice for users too:
 Try it Out
 ----------
 
-Check out the github repository, vagrant up, and load http://localhost:8888 in
+Check out the github repository, vagrant up, and load http://localhost:8080 in
 your web browser.
 
 NOTE: the first time you may see an error about webdav not being setup
