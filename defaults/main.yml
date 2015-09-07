@@ -3,8 +3,8 @@ owncloud_run_dir: "{{ lookup('env', 'PWD') }}"
 owncloud_root_mysql_password: "{{ lookup('password', owncloud_run_dir + '/private/credentials/root-mysql-password') }}"
 owncloud_owncloud_mysql_password: "{{ lookup('password', owncloud_run_dir + '/private/credentials/owncloud-mysql-password') }}"
 
-owncloud_download_url: http://download.owncloud.org/community/owncloud-6.0.4.tar.bz2
-owncloud_hostname: localhost
+owncloud_download_url: http://download.owncloud.org/community/owncloud-8.1.1.tar.bz2
+owncloud_hostname: dbowncloud.dev
 owncloud_http_port: 80
 owncloud_https_port: 443
 owncloud_require_ssl: true
