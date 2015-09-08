@@ -1,13 +1,17 @@
 ---
 - name: restart php5-fpm
-  service:
-    name: php5-fpm
-    state: restarted
+  command: service php5-fpm restart
+  # service:
+  #   name: php5-fpm
+  #   command: service php5-fpm restart
+    # state: restarted
 
 - name: restart nginx
-  service:
-    name: nginx
-    state: restarted
+  command: service nginx restart
+  # service:
+  #   name: nginx
+  #   command: service nginx restart
+    # state: restarted
 
 - name: update /srv/owncloud/config/autoconfig.php from template
   template:
